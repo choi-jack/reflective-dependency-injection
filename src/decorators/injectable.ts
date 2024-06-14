@@ -5,8 +5,8 @@ import { Identifier, isIdentifier } from '../identifier.js';
 import { MetadataKeys } from '../metadata-keys.js';
 
 function getDependencyIdentifier(metadata: Metadata): Identifier {
-    if (metadata.hasOwn(MetadataKeys.JSYRINGE_DEPENDENCY_IDENTIFIER)) {
-        return metadata.getOwn(MetadataKeys.JSYRINGE_DEPENDENCY_IDENTIFIER)!;
+    if (metadata.hasOwn(MetadataKeys.REFLECTIVE_DEPENDENCY_INJECTION_DEPENDENCY_IDENTIFIER)) {
+        return metadata.getOwn(MetadataKeys.REFLECTIVE_DEPENDENCY_INJECTION_DEPENDENCY_IDENTIFIER)!;
     }
 
     const type: unknown = metadata.getOwn(MetadataKeys.DESIGN_TYPE);
@@ -26,7 +26,7 @@ function createDependencies(methodMetadata: Metadata): ReadonlyArray<Dependency>
 
         return {
             identifier: getDependencyIdentifier(parameterMetadata),
-            optional: parameterMetadata.getOwn(MetadataKeys.JSYRINGE_DEPENDENCY_OPTIONAL) ?? false,
+            optional: parameterMetadata.getOwn(MetadataKeys.REFLECTIVE_DEPENDENCY_INJECTION_DEPENDENCY_OPTIONAL) ?? false,
         };
     });
 }
@@ -54,19 +54,19 @@ function getDependencies(methodMetadata: Metadata): ReadonlyArray<Dependency> {
         return createDependencies(methodMetadata);
     }
 
-    if (!constructorMetadata.hasOwn(MetadataKeys.JSYRINGE_DEPENDENCIES)) {
+    if (!constructorMetadata.hasOwn(MetadataKeys.REFLECTIVE_DEPENDENCY_INJECTION_DEPENDENCIES)) {
         throw new Error(`Constructor is not injectable.\nConstructor: ${methodMetadata.target}`);
     }
 
-    return constructorMetadata.getOwn(MetadataKeys.JSYRINGE_DEPENDENCIES)!;
+    return constructorMetadata.getOwn(MetadataKeys.REFLECTIVE_DEPENDENCY_INJECTION_DEPENDENCIES)!;
 }
 
 export function Injectable(): ClassDecorator & MethodDecorator {
     return Metadata.decorator((methodMetadata: Metadata): void => {
-        if (methodMetadata.hasOwn(MetadataKeys.JSYRINGE_DEPENDENCIES)) {
+        if (methodMetadata.hasOwn(MetadataKeys.REFLECTIVE_DEPENDENCY_INJECTION_DEPENDENCIES)) {
             return;
         }
 
-        methodMetadata.set(MetadataKeys.JSYRINGE_DEPENDENCIES, getDependencies(methodMetadata));
+        methodMetadata.set(MetadataKeys.REFLECTIVE_DEPENDENCY_INJECTION_DEPENDENCIES, getDependencies(methodMetadata));
     });
 }

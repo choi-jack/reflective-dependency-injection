@@ -35,7 +35,7 @@ export abstract class Reflector {
     }
 
     public isInjectable(): boolean {
-        return this.metadata.hasOwn(MetadataKeys.JSYRINGE_DEPENDENCIES);
+        return this.metadata.hasOwn(MetadataKeys.REFLECTIVE_DEPENDENCY_INJECTION_DEPENDENCIES);
     }
 
     public getDependencies(): ReadonlyArray<Dependency> {
@@ -43,6 +43,6 @@ export abstract class Reflector {
             throw new Error(`Target is not injectable.\nTarget: ${stringifyTarget(this.metadata.target, this.metadata.propertyKey)}`);
         }
 
-        return this.metadata.getOwn(MetadataKeys.JSYRINGE_DEPENDENCIES)!;
+        return this.metadata.getOwn(MetadataKeys.REFLECTIVE_DEPENDENCY_INJECTION_DEPENDENCIES)!;
     }
 }
