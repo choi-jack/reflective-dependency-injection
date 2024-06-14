@@ -1,0 +1,60 @@
+{
+    "root": true,
+    "extends": [
+        "eslint:recommended",
+        "plugin:@typescript-eslint/strict-type-checked",
+        "plugin:@typescript-eslint/stylistic-type-checked"
+    ],
+    "plugins": [
+        "@typescript-eslint",
+        "@stylistic"
+    ],
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+        "project": "./tsconfig.json"
+    },
+    "rules": {
+        "@typescript-eslint/array-type": [
+            "error",
+            {
+                "default": "generic"
+            }
+        ],
+        "@typescript-eslint/typedef": [
+            "error",
+            {
+                "arrayDestructuring": true,
+                "arrowParameter": true,
+                "memberVariableDeclaration": true,
+                "objectDestructuring": true,
+                "parameter": true,
+                "propertyDeclaration": true,
+                "variableDeclaration": true,
+                "variableDeclarationIgnoreFunction": true
+            }
+        ],
+        "@typescript-eslint/no-non-null-assertion": "warn",
+        "@typescript-eslint/no-inferrable-types": "off",
+        "@typescript-eslint/no-unused-vars": [
+            "error",
+            {
+                "argsIgnorePattern": "^_",
+                "varsIgnorePattern": "^_"
+            }
+        ],
+        "@typescript-eslint/consistent-generic-constructors": [
+            "error",
+            "type-annotation"
+        ],
+        "@stylistic/quotes": [
+            "error",
+            "single"
+        ],
+        "@stylistic/semi": "error",
+        "@stylistic/member-delimiter-style": "error",
+        "@stylistic/comma-dangle": [
+            "error",
+            "always-multiline"
+        ]
+    }
+}

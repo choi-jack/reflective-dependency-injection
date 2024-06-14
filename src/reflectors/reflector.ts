@@ -1,0 +1,48 @@
+import { Metadata } from 'class-metadata';
+
+import { Class } from '../class.js';
+import { Dependency } from '../dependency.js';
+import { MetadataKeys } from '../metadata-keys.js';
+
+function getTargetName(target: object): string {
+    if (typeof target === 'function') {
+        return target.name;
+    }
+
+    const clazz: Class = Reflect.get(target, 'constructor');
+
+    return `${clazz.name}.prototype`;
+}
+
+function stringifyTarget(target: object, propertyKey: null | PropertyKey): string {
+    const targetName: string = getTargetName(target);
+
+    if (propertyKey === null) {
+        return targetName;
+    }
+
+    return `${targetName}[${propertyKey.toString()}]`;
+}
+
+export abstract class Reflector {
+    public readonly metadata: Metadata;
+
+    public constructor(
+        target: object,
+        propertyKey: null | PropertyKey,
+    ) {
+        this.metadata = Metadata.of(target, propertyKey);
+    }
+
+    public isInjectable(): boolean {
+        return this.metadata.hasOwn(MetadataKeys.JSYRINGE_DEPENDENCIES);
+    }
+
+    public getDependencies(): ReadonlyArray<Dependency> {
+        if (!this.isInjectable()) {
+            throw new Error(`Target is not injectable.\nTarget: ${stringifyTarget(this.metadata.target, this.metadata.propertyKey)}`);
+        }
+
+        return this.metadata.getOwn(MetadataKeys.JSYRINGE_DEPENDENCIES)!;
+    }
+}
