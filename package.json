@@ -38,12 +38,13 @@
         "tslib": "^2.6.3"
     },
     "devDependencies": {
+        "@choi-jack/eslint-config": "^0.1.0",
+        "@eslint/js": "^9.5.0",
         "@jest/globals": "^29.7.0",
-        "@stylistic/eslint-plugin": "^2.1.0",
+        "@stylistic/eslint-plugin": "^2.3.0",
         "@tsconfig/node20": "^20.1.4",
+        "@types/eslint__js": "^8.42.3",
         "@types/node": "^20.14.2",
-        "@typescript-eslint/eslint-plugin": "^7.13.0",
-        "@typescript-eslint/parser": "^7.13.0",
         "conventional-changelog-cli": "^5.0.0",
         "eslint": "^8.57.0",
         "jest": "^29.7.0",
@@ -51,6 +52,7 @@
         "rimraf": "^5.0.7",
         "ts-jest": "^29.1.4",
         "ts-node": "^10.9.2",
-        "typescript": "^5.4.5"
+        "typescript": "^5.5.2",
+        "typescript-eslint": "^7.14.1"
     }
 }
