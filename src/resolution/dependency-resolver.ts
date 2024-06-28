@@ -88,12 +88,12 @@ export class DependencyResolver {
     }
 
     private async resolveBinding(request: ResolutionRequest, binding: Binding): Promise<unknown> {
+        this.detectCircularDependency(request);
+        this.detectLifetimeMismatch(request, binding);
+
         if (binding.isResolved()) {
             return binding.getResolvedValue();
         }
-
-        this.detectCircularDependency(request);
-        this.detectLifetimeMismatch(request, binding);
 
         const resolution: Promise<unknown> = this.resolveProvider(request, binding.provider);
 
