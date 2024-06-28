@@ -1,9 +1,11 @@
 import { Binding } from '../bindings.js';
 import { Dependency } from '../dependency.js';
-import { Identifier, isIdentifier, stringifyIdentifier } from '../identifier.js';
+import { Identifier, stringifyIdentifier } from '../identifier.js';
 import { Provider, isClassProvider, isExistingProvider, isFactoryProvider } from '../providers.js';
 import { ConstructorReflector } from '../reflectors.js';
+import { InjectionContext } from './injection-context.js';
 import { ResolutionRequest } from './resolution-request.js';
+import { Resolver } from './resolver.js';
 
 function stringifyResolutionPath(resolutionPath: ReadonlyArray<Identifier>): string {
     return resolutionPath
@@ -11,7 +13,7 @@ function stringifyResolutionPath(resolutionPath: ReadonlyArray<Identifier>): str
         .join(' -> ');
 }
 
-export class DependencyResolver {
+export class DependencyResolver implements Resolver {
     public constructor(
         private readonly bindings: ReadonlyMap<Identifier, Binding>,
     ) { }
@@ -68,20 +70,9 @@ export class DependencyResolver {
         }
 
         if (isFactoryProvider(provider)) {
-            const factoryDependencies: ReadonlyArray<Identifier | Dependency> = provider.dependencies ?? [];
-            const dependencies: ReadonlyArray<Dependency> = factoryDependencies.map((factoryDependency: Identifier | Dependency): Dependency => {
-                if (isIdentifier(factoryDependency)) {
-                    return {
-                        identifier: factoryDependency,
-                        optional: false,
-                    };
-                }
+            const context: InjectionContext = new InjectionContext(this, this.bindings, request);
 
-                return factoryDependency;
-            });
-            const args: ReadonlyArray<unknown> = await this.resolveDependencies(request, dependencies);
-
-            return await Reflect.apply(provider.useFactory, null, args);
+            return await Reflect.apply(provider.useFactory, null, [context]);
         }
 
         return provider.useValue;

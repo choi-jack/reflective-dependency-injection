@@ -1,4 +1,5 @@
 export * from './class.js';
+export * from './context.js';
 export * from './decorators.js';
 export * from './dependency.js';
 export { Identifier } from './identifier.js';

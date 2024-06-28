@@ -1,18 +1,17 @@
 import { Binding, SingletonBinding, TransientBinding } from './bindings.js';
+import { Context } from './context.js';
 import { Dependency } from './dependency.js';
 import { Identifier, stringifyIdentifier } from './identifier.js';
 import { Lifetime } from './lifetime.js';
 import { Provider, isClassProvider, isExistingProvider, isFactoryProvider } from './providers.js';
 import { DependencyResolver, ResolutionRequest } from './resolution.js';
 
-export class Injector {
+export class Injector implements Context {
     private readonly bindings: ReadonlyMap<Identifier, Binding>;
-
     private readonly dependencyResolver: DependencyResolver;
 
     public constructor(providers: ReadonlyArray<Provider>) {
         this.bindings = this.createBindings(providers);
-
         this.dependencyResolver = new DependencyResolver(this.bindings);
     }
 
