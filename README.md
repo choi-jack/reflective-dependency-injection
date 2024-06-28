@@ -2,6 +2,12 @@
 
 Dependency injection based on TypeScript's experimental support for stage 2 decorators and metadata.
 
+- Constructor-based injection
+- Asynchronous support
+- Error detection
+  - Circular dependency
+  - Lifetime mismatch
+
 ## Getting Started
 
 If you are unfamiliar with decorators and metadata, I recommend checking out the TypeScript documentation and TC39's decorator proposal documentation.
