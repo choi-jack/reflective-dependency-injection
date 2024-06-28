@@ -3,11 +3,15 @@ import { ExistingProvider } from './existing-provider.js';
 import { FactoryProvider } from './factory-provider.js';
 import { ValueProvider } from './value-provider.js';
 
-export type Provider
-    = ClassProvider
-    | ExistingProvider
-    | FactoryProvider
-    | ValueProvider;
+export type Provider<T = unknown>
+    = ClassProvider<T>
+    | ExistingProvider<T>
+    | FactoryProvider<T>
+    | ValueProvider<T>;
+
+export function provide<T>(provider: Provider<T>): Provider<T> {
+    return provider;
+}
 
 export function isClassProvider(provider: Provider): provider is ClassProvider {
     return 'useClass' in provider;

@@ -2,11 +2,11 @@ import { Context } from '../context.js';
 import { Identifier } from '../identifier.js';
 import { Lifetime } from '../lifetime.js';
 
-export type Factory = (context: Context) => unknown;
+export type Factory<T = unknown> = (context: Context) => T | Promise<T>;
 
-export interface FactoryProvider {
-    readonly identifier: Identifier;
-    readonly useFactory: Factory;
+export interface FactoryProvider<T = unknown> {
+    readonly identifier: Identifier<T>;
+    readonly useFactory: Factory<T>;
 
     /**
      * @default Lifetime.SINGLETON

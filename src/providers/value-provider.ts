@@ -1,6 +1,6 @@
 import { Identifier } from '../identifier.js';
 
-export interface ValueProvider {
-    readonly identifier: Identifier;
-    readonly useValue: unknown;
+export interface ValueProvider<T = unknown> {
+    readonly identifier: Identifier<T>;
+    readonly useValue: T;
 }

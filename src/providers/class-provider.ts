@@ -2,9 +2,9 @@ import { Class } from '../class.js';
 import { Identifier } from '../identifier.js';
 import { Lifetime } from '../lifetime.js';
 
-export interface ClassProvider {
-    readonly identifier: Identifier;
-    readonly useClass: Class;
+export interface ClassProvider<T = unknown> {
+    readonly identifier: Identifier<T>;
+    readonly useClass: Class<T>;
 
     /**
      * @default Lifetime.SINGLETON

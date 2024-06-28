@@ -1,6 +1,6 @@
 import { Identifier } from '../identifier.js';
 
-export interface ExistingProvider {
-    readonly identifier: Identifier;
-    readonly useExisting: Identifier;
+export interface ExistingProvider<T = unknown> {
+    readonly identifier: Identifier<T>;
+    readonly useExisting: Identifier<T>;
 }

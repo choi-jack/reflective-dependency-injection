@@ -28,12 +28,12 @@ This package is [pure ESM](https://gist.github.com/sindresorhus/a39789f98801d908
 
 2. Import the `reflect-metadata` package into your application entry point.
 
-    - It should be imported only once in the entire application, and before other packages.
-    - If you distribute a module as a package, it must not be imported and must be installed as a development dependency.
-
     ```typescript
     import 'reflect-metadata';
     ```
+
+    - It should be imported only once in the entire application, and before other packages.
+    - If you distribute a module as a package, it must not be imported and must be installed as a development dependency.
 
 3. Set compiler options in your `tsconfig.json` to enable experimental support for stage 2 decorators and metadata.
 
@@ -80,18 +80,20 @@ class Greeter {
 
 Create an injector with providers that provide the declared dependencies.
 
+> Use the `provide` function for type safety.
+
 ```typescript
-import { Injector } from 'reflective-dependency-injection';
+import { Injector, provide } from 'reflective-dependency-injection';
 
 const injector: Injector = new Injector([
-    {
+    provide({
         identifier: Greeter,
         useClass: Greeter,
-    },
-    {
+    }),
+    provide({
         identifier: GREETING,
         useValue: 'world!',
-    },
+    }),
 ]);
 ```
 
