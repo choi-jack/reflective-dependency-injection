@@ -1,1 +1,1 @@
-export type Class<T = unknown> = new (...args: any) => T;
+export type Class<T = unknown> = new (...args: ReadonlyArray<any>) => T;

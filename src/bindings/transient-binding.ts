@@ -15,6 +15,7 @@ export class TransientBinding implements Binding {
         return false;
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
     public resolve(_resolution: Promise<unknown>): void { }
 
     public getResolvedValue(): unknown {

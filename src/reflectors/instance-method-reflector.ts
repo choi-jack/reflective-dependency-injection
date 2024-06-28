@@ -1,4 +1,4 @@
-import { MethodReflector } from './method-reflector.js';
+import { Method, MethodReflector } from './method-reflector.js';
 
 export class InstanceMethodReflector<T = unknown> extends MethodReflector<T> {
     public constructor(
@@ -14,7 +14,7 @@ export class InstanceMethodReflector<T = unknown> extends MethodReflector<T> {
         super(
             target,
             propertyKey,
-            Reflect.get(target, propertyKey),
+            Reflect.get(target, propertyKey) as Method<T>,
             instance,
         );
     }

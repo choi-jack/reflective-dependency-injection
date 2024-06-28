@@ -88,7 +88,7 @@ export class DependencyResolver implements Resolver {
 
         const resolution: Promise<unknown> = this.resolveProvider(request, binding.provider);
 
-        binding.resolve(resolution);
+        void binding.resolve(resolution);
 
         return await resolution;
     }

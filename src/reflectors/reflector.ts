@@ -1,6 +1,5 @@
 import { Metadata } from 'class-metadata';
 
-import { Class } from '../class.js';
 import { Dependency } from '../dependency.js';
 import { MetadataKeys } from '../metadata-keys.js';
 
@@ -9,9 +8,7 @@ function getTargetName(target: object): string {
         return target.name;
     }
 
-    const clazz: Class = Reflect.get(target, 'constructor');
-
-    return `${clazz.name}.prototype`;
+    return `${target.constructor.name}.prototype`;
 }
 
 function stringifyTarget(target: object, propertyKey: null | PropertyKey): string {
