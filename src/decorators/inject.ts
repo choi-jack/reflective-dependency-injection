@@ -5,10 +5,10 @@ import { MetadataKeys } from '../metadata-keys.js';
 
 export function Inject(identifier: Identifier): ParameterDecorator {
     return Metadata.decorator((metadata: Metadata): void => {
-        if (metadata.hasOwn(MetadataKeys.REFLECTIVE_DEPENDENCY_INJECTION_DEPENDENCY_IDENTIFIER)) {
+        if (metadata.hasOwn(MetadataKeys.RDI_IDENTIFIER)) {
             throw new Error('Identifier has already been specified.');
         }
 
-        metadata.set(MetadataKeys.REFLECTIVE_DEPENDENCY_INJECTION_DEPENDENCY_IDENTIFIER, identifier);
+        metadata.set(MetadataKeys.RDI_IDENTIFIER, identifier);
     });
 }
