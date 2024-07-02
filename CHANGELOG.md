@@ -1,3 +1,12 @@
+# [0.3.0](https://github.com/choi-jack/reflective-dependency-injection/compare/v0.2.0...v0.3.0) (2024-07-02)
+
+
+### Features
+
+* Export utility functions for identifiers and providers ([f025245](https://github.com/choi-jack/reflective-dependency-injection/commit/f0252452e0cd31cdfa62a0591b44069c72d89268))
+
+
+
 # [0.2.0](https://github.com/choi-jack/reflective-dependency-injection/compare/v0.1.1...v0.2.0) (2024-06-28)
 
 
