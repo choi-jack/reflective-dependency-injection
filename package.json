@@ -21,6 +21,7 @@
     "scripts": {
         "lint": "eslint .",
         "test": "node --experimental-vm-modules ./node_modules/jest/bin/jest.js",
+        "test:watch": "node --experimental-vm-modules ./node_modules/jest/bin/jest.js --watch",
         "prebuild": "npm run clean",
         "build": "tsc -p ./tsconfig.build.json",
         "clean": "rimraf --glob ./dist ./*.tgz ./coverage",

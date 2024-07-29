@@ -15,7 +15,8 @@
         ]
     },
     "collectCoverage": true,
-    "setupFilesAfterEnv": [
-        "<rootDir>/test/setup.ts"
-    ]
+    "collectCoverageFrom": [
+        "./src/**"
+    ],
+    "verbose": true
 }
