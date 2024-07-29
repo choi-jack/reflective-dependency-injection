@@ -1,16 +1,16 @@
-export class InjectionToken<T> {
+export class InjectionToken<Type = unknown> {
     /**
-     * This is for type safety and the value is null.
+     * This field is for type safety. The runtime value is null.
      */
-    public readonly type: null | T;
+    public readonly type: null | Type;
 
     public constructor(
-        public readonly name: string,
+        public readonly description: string = '',
     ) {
         this.type = null;
     }
 
     public toString(): string {
-        return `InjectionToken(${this.name})`;
+        return `InjectionToken(${this.description})`;
     }
 }
