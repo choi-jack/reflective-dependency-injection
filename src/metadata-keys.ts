@@ -1,8 +1,8 @@
-export const enum MetadataKeys {
-    DESIGN_PARAMTYPES = 'design:paramtypes',
-    DESIGN_TYPE = 'design:type',
+import { MetadataKey } from 'class-metadata';
 
-    RDI_DEPENDENCIES = 'reflective-dependency-injection:dependencies',
-    RDI_IDENTIFIER = 'reflective-dependency-injection:dependency.identifier',
-    RDI_OPTIONAL = 'reflective-dependency-injection:dependency.optional',
-}
+import { Dependency } from './dependency.js';
+import { Identifier } from './identifier.js';
+
+export const DEPENDENCIES: MetadataKey<ReadonlyArray<Dependency>> = new MetadataKey('dependencies');
+export const IDENTIFIER: MetadataKey<Identifier> = new MetadataKey('identifier');
+export const OPTIONAL: MetadataKey<true> = new MetadataKey('OPTIONAL');

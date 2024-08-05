@@ -1,15 +1,13 @@
-import { Metadata } from 'class-metadata';
+import { DesignMetadataKeys, Metadata, MetadataReflector } from 'class-metadata';
 
 import { Dependency } from '../dependency.js';
 import { Identifier, isIdentifier } from '../identifier.js';
-import { MetadataKeys } from '../metadata-keys.js';
+import { DEPENDENCIES, IDENTIFIER, OPTIONAL } from '../metadata-keys.js';
 
-function getDependencyIdentifier(metadata: Metadata): Identifier {
-    if (metadata.hasOwn(MetadataKeys.RDI_IDENTIFIER)) {
-        return metadata.getOwn(MetadataKeys.RDI_IDENTIFIER)!;
+function getIdentifier(metadata: Metadata, type: unknown): Identifier {
+    if (metadata.hasOwn(IDENTIFIER)) {
+        return metadata.getOwn(IDENTIFIER)!;
     }
-
-    const type: unknown = metadata.getOwn(MetadataKeys.DESIGN_TYPE);
 
     if (isIdentifier(type)) {
         return type;
@@ -18,55 +16,43 @@ function getDependencyIdentifier(metadata: Metadata): Identifier {
     throw new Error(`Invalid identifier.\nIdentifier: ${type}`);
 }
 
-function createDependencies(methodMetadata: Metadata): ReadonlyArray<Dependency> {
-    const parameterTypes: ReadonlyArray<unknown> = methodMetadata.getOwn(MetadataKeys.DESIGN_PARAMTYPES) ?? [];
+function createDependencies(metadata: Metadata): ReadonlyArray<Dependency> {
+    const parameterTypes: ReadonlyArray<unknown> = metadata.getOwn(DesignMetadataKeys.PARAMETER_TYPES) as null | ReadonlyArray<unknown> ?? [];
 
-    return parameterTypes.map((_parameterType: unknown, parameterIndex: number): Dependency => {
-        const parameterMetadata: Metadata = Metadata.of(methodMetadata.target, methodMetadata.propertyKey, parameterIndex);
+    return parameterTypes.map((parameterType: unknown, parameterIndex: number): Dependency => {
+        const parameterMetadata: Metadata = MetadataReflector.reflect(metadata.target, metadata.propertyKey, parameterIndex);
 
         return {
-            identifier: getDependencyIdentifier(parameterMetadata),
-            optional: parameterMetadata.getOwn(MetadataKeys.RDI_OPTIONAL) ?? false,
+            identifier: getIdentifier(parameterMetadata, parameterType),
+            optional: parameterMetadata.hasOwn(OPTIONAL),
         };
     });
 }
 
-function getConstructorMetadata(metadata: Metadata): null | Metadata {
-    if (metadata.hasOwn(MetadataKeys.DESIGN_PARAMTYPES)) {
-        return metadata;
+function getDependencies(metadata: Metadata): ReadonlyArray<Dependency> {
+    if (metadata.propertyKey !== null || metadata.hasOwn(DesignMetadataKeys.PARAMETER_TYPES)) {
+        return createDependencies(metadata);
     }
 
-    if (metadata.parent === null) {
-        return null;
+    const superclass: null | object = Reflect.getPrototypeOf(metadata.target);
+
+    if (superclass !== null) {
+        const superclassMetadata: Metadata = MetadataReflector.reflect(superclass);
+
+        if (superclassMetadata.hasOwn(DEPENDENCIES)) {
+            return superclassMetadata.getOwn(DEPENDENCIES)!;
+        }
     }
 
-    return getConstructorMetadata(metadata.parent);
-}
-
-function getDependencies(methodMetadata: Metadata): ReadonlyArray<Dependency> {
-    if (methodMetadata.propertyKey !== null) {
-        return createDependencies(methodMetadata);
-    }
-
-    const constructorMetadata: Metadata = getConstructorMetadata(methodMetadata) ?? methodMetadata;
-
-    if (constructorMetadata === methodMetadata) {
-        return createDependencies(methodMetadata);
-    }
-
-    if (!constructorMetadata.hasOwn(MetadataKeys.RDI_DEPENDENCIES)) {
-        throw new Error(`Constructor is not injectable.\nConstructor: ${methodMetadata.target}`);
-    }
-
-    return constructorMetadata.getOwn(MetadataKeys.RDI_DEPENDENCIES)!;
+    return createDependencies(metadata);
 }
 
 export function Injectable(): ClassDecorator & MethodDecorator {
-    return Metadata.decorator((methodMetadata: Metadata): void => {
-        if (methodMetadata.hasOwn(MetadataKeys.RDI_DEPENDENCIES)) {
+    return MetadataReflector.createDecorator((metadata: Metadata): void => {
+        if (metadata.hasOwn(DEPENDENCIES)) {
             return;
         }
 
-        methodMetadata.set(MetadataKeys.RDI_DEPENDENCIES, getDependencies(methodMetadata));
+        metadata.set(DEPENDENCIES, getDependencies(metadata));
     });
 }

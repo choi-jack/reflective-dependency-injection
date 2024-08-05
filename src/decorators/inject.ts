@@ -1,14 +1,14 @@
-import { Metadata } from 'class-metadata';
+import { Metadata, MetadataReflector } from 'class-metadata';
 
 import { Identifier } from '../identifier.js';
-import { MetadataKeys } from '../metadata-keys.js';
+import { IDENTIFIER } from '../metadata-keys.js';
 
 export function Inject(identifier: Identifier): ParameterDecorator {
-    return Metadata.decorator((metadata: Metadata): void => {
-        if (metadata.hasOwn(MetadataKeys.RDI_IDENTIFIER)) {
+    return MetadataReflector.createDecorator((metadata: Metadata): void => {
+        if (metadata.hasOwn(IDENTIFIER)) {
             throw new Error('Identifier has already been specified.');
         }
 
-        metadata.set(MetadataKeys.RDI_IDENTIFIER, identifier);
+        metadata.set(IDENTIFIER, identifier);
     });
 }

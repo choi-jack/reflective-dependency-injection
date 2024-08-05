@@ -1,10 +1,10 @@
 export * from './class.js';
 export * from './context.js';
 export * from './decorators.js';
+export * as DependencyReflector from './dependency-reflector.js';
 export * from './dependency.js';
 export * from './identifier.js';
 export * from './injection-token.js';
 export * from './injector.js';
 export * from './lifetime.js';
 export * from './providers.js';
-export * from './reflectors.js';

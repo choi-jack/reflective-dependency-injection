@@ -1,8 +1,8 @@
 import { Binding } from '../bindings.js';
+import { getOwnDependencies } from '../dependency-reflector.js';
 import { Dependency } from '../dependency.js';
 import { Identifier, stringifyIdentifier } from '../identifier.js';
 import { Provider, isClassProvider, isExistingProvider, isFactoryProvider } from '../providers.js';
-import { ConstructorReflector } from '../reflectors.js';
 import { InjectionContext } from './injection-context.js';
 import { ResolutionRequest } from './resolution-request.js';
 import { Resolver } from './resolver.js';
@@ -54,10 +54,15 @@ export class DependencyResolver implements Resolver {
 
     private async resolveProvider(request: ResolutionRequest, provider: Provider): Promise<unknown> {
         if (isClassProvider(provider)) {
-            const reflector: ConstructorReflector = new ConstructorReflector(provider.useClass);
-            const args: ReadonlyArray<unknown> = await this.resolveDependencies(request, reflector.getDependencies());
+            const dependencies: null | ReadonlyArray<Dependency> = getOwnDependencies(provider.useClass);
 
-            return reflector.construct(args);
+            if (dependencies === null) {
+                throw new Error(`Constructor is not injectable.\nConstructor: ${provider.useClass}`);
+            }
+
+            const args: ReadonlyArray<unknown> = await this.resolveDependencies(request, dependencies);
+
+            return Reflect.construct(provider.useClass, args);
         }
 
         if (isExistingProvider(provider)) {
