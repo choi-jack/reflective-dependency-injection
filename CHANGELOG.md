@@ -1,3 +1,13 @@
+# [0.4.0](https://github.com/choi-jack/reflective-dependency-injection/compare/v0.3.0...v0.4.0) (2024-08-05)
+
+
+### Features
+
+* Rewrite `InjectionToken` class ([070d367](https://github.com/choi-jack/reflective-dependency-injection/commit/070d367122c9b2aa7a9275965eeb2d62f760204b))
+* Rewrite reflection feature ([d034ef1](https://github.com/choi-jack/reflective-dependency-injection/commit/d034ef12ffa2a305ff10ee02ab2bc17edf8ca4e3))
+
+
+
 # [0.3.0](https://github.com/choi-jack/reflective-dependency-injection/compare/v0.2.0...v0.3.0) (2024-07-02)
 
 
