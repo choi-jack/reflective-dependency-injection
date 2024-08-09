@@ -1,3 +1,12 @@
+## [0.4.1](https://github.com/choi-jack/reflective-dependency-injection/compare/v0.4.0...v0.4.1) (2024-08-09)
+
+
+### Features
+
+* Change class type ([cd72075](https://github.com/choi-jack/reflective-dependency-injection/commit/cd72075e70a417292f69b2e5f741885a99d9d455))
+
+
+
 # [0.4.0](https://github.com/choi-jack/reflective-dependency-injection/compare/v0.3.0...v0.4.0) (2024-08-05)
 
 
