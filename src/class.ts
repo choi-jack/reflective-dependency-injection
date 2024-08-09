@@ -1,1 +1,4 @@
-export type Class<T = unknown> = new (...args: ReadonlyArray<any>) => T;
+export interface Class<T = unknown> {
+    new(...args: ReadonlyArray<any>): T;
+    readonly prototype: T;
+}
