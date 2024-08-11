@@ -1,3 +1,12 @@
+## [0.4.2](https://github.com/choi-jack/reflective-dependency-injection/compare/v0.4.1...v0.4.2) (2024-08-11)
+
+
+### Features
+
+* Change type parameter of `Class` interface ([f43ce4c](https://github.com/choi-jack/reflective-dependency-injection/commit/f43ce4c792d3ca52f5655dfe89899b106b9592b3))
+
+
+
 ## [0.4.1](https://github.com/choi-jack/reflective-dependency-injection/compare/v0.4.0...v0.4.1) (2024-08-09)
 
 
