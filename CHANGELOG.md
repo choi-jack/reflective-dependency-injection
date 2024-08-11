@@ -1,3 +1,12 @@
+## [0.4.3](https://github.com/choi-jack/reflective-dependency-injection/compare/v0.4.2...v0.4.3) (2024-08-11)
+
+
+### Features
+
+* Add constraint to type parameter of `Class` interface ([822cf99](https://github.com/choi-jack/reflective-dependency-injection/commit/822cf993ccd2f9b78d70975ec52a007485149b01))
+
+
+
 ## [0.4.2](https://github.com/choi-jack/reflective-dependency-injection/compare/v0.4.1...v0.4.2) (2024-08-11)
 
 
