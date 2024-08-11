@@ -2,7 +2,7 @@ import { Class } from './class.js';
 import { InjectionToken } from './injection-token.js';
 
 export type Identifier<T = unknown>
-    = Class<T>
+    = Class<T extends object ? T : object>
     | InjectionToken<T>;
 
 export function isIdentifier(value: unknown): value is Identifier {

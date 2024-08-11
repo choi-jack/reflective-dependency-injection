@@ -4,7 +4,7 @@ import { FactoryProvider } from './factory-provider.js';
 import { ValueProvider } from './value-provider.js';
 
 export type Provider<T = unknown>
-    = ClassProvider<T>
+    = ClassProvider<T extends object ? T : object>
     | ExistingProvider<T>
     | FactoryProvider<T>
     | ValueProvider<T>;
