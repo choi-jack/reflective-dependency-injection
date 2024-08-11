@@ -1,4 +1,4 @@
-export interface Class<T = unknown> {
-    new(...args: ReadonlyArray<any>): T;
-    readonly prototype: T;
+export interface Class<Instance = object> {
+    new(...args: ReadonlyArray<any>): Instance;
+    readonly prototype: Instance;
 }
