@@ -62,7 +62,7 @@ export class DependencyResolver implements Resolver {
 
             const args: ReadonlyArray<unknown> = await this.resolveDependencies(request, dependencies);
 
-            return Reflect.construct(provider.useClass, args);
+            return new provider.useClass(...args);
         }
 
         if (isExistingProvider(provider)) {
@@ -77,7 +77,8 @@ export class DependencyResolver implements Resolver {
         if (isFactoryProvider(provider)) {
             const context: InjectionContext = new InjectionContext(this, this.bindings, request);
 
-            return await Reflect.apply(provider.useFactory, null, [context]);
+            // eslint-disable-next-line @typescript-eslint/return-await
+            return await provider.useFactory(context);
         }
 
         return provider.useValue;
