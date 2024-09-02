@@ -1,3 +1,14 @@
+# [0.5.0](https://github.com/choi-jack/reflective-dependency-injection/compare/v0.4.3...v0.5.0) (2024-09-02)
+
+
+### Features
+
+* Change property key type ([24b2267](https://github.com/choi-jack/reflective-dependency-injection/commit/24b226745a253fc35c56d8e7c0841773654b9b58))
+* Change provider resolution ([c2cc630](https://github.com/choi-jack/reflective-dependency-injection/commit/c2cc630cd5c4adb0fa646051eb2754536a1a19cb))
+* Update dependencies ([cb32a91](https://github.com/choi-jack/reflective-dependency-injection/commit/cb32a9139b707035c836d673a0f6f3fc626b7a99))
+
+
+
 ## [0.4.3](https://github.com/choi-jack/reflective-dependency-injection/compare/v0.4.2...v0.4.3) (2024-08-11)
 
 
