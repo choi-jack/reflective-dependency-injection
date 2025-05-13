@@ -35,7 +35,7 @@
         "url": "git+https://github.com/choi-jack/reflective-dependency-injection.git"
     },
     "dependencies": {
-        "class-metadata": "^0.3.0"
+        "class-metadata": "^0.4.0"
     },
     "devDependencies": {
         "@choi-jack/eslint-config": "^0.2.2",
