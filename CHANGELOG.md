@@ -1,3 +1,13 @@
+# [0.6.0](https://github.com/choi-jack/reflective-dependency-injection/compare/v0.5.0...v0.6.0) (2025-05-13)
+
+
+### Features
+
+* Add method inheritance support to the `@Injectable` decorator ([b034ec9](https://github.com/choi-jack/reflective-dependency-injection/commit/b034ec96886b3b937c5913451375fb61b04f6e41))
+* Update dependency `class-metadata` to `^0.4.0` ([fe283d3](https://github.com/choi-jack/reflective-dependency-injection/commit/fe283d33cf5b19fb6cd22289ce507f1b3872f6ee))
+
+
+
 # [0.5.0](https://github.com/choi-jack/reflective-dependency-injection/compare/v0.4.3...v0.5.0) (2024-09-02)
 
 
