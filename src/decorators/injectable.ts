@@ -16,35 +16,33 @@ function getIdentifier(metadata: Metadata, type: unknown): Identifier {
     throw new Error(`Invalid identifier.\nIdentifier: ${type}`);
 }
 
-function createDependencies(metadata: Metadata): ReadonlyArray<Dependency> {
-    const parameterTypes: ReadonlyArray<unknown> = metadata.getOwn(DesignMetadataKeys.PARAMETER_TYPES) as null | ReadonlyArray<unknown> ?? [];
-
-    return parameterTypes.map((parameterType: unknown, parameterIndex: number): Dependency => {
-        const parameterMetadata: Metadata = MetadataReflector.reflect(metadata.target, metadata.propertyKey, parameterIndex);
-
-        return {
-            identifier: getIdentifier(parameterMetadata, parameterType),
-            optional: parameterMetadata.hasOwn(OPTIONAL),
-        };
-    });
-}
-
 function getDependencies(metadata: Metadata): ReadonlyArray<Dependency> {
-    if (metadata.propertyKey !== null || metadata.hasOwn(DesignMetadataKeys.PARAMETER_TYPES)) {
-        return createDependencies(metadata);
+    if (metadata.hasOwn(DesignMetadataKeys.PARAMETER_TYPES)) {
+        const parameterTypes: ReadonlyArray<unknown> = metadata.getOwn(DesignMetadataKeys.PARAMETER_TYPES) as null | ReadonlyArray<unknown> ?? [];
+
+        return parameterTypes.map((parameterType: unknown, parameterIndex: number): Dependency => {
+            const parameterMetadata: Metadata = MetadataReflector.reflect(metadata.target, metadata.propertyKey, parameterIndex);
+
+            return {
+                identifier: getIdentifier(parameterMetadata, parameterType),
+                optional: parameterMetadata.hasOwn(OPTIONAL),
+            };
+        });
     }
 
-    const superclass: null | object = Reflect.getPrototypeOf(metadata.target);
+    const parentTarget: null | object = Reflect.getPrototypeOf(metadata.target);
 
-    if (superclass !== null) {
-        const superclassMetadata: Metadata = MetadataReflector.reflect(superclass);
-
-        if (superclassMetadata.hasOwn(DEPENDENCIES)) {
-            return superclassMetadata.getOwn(DEPENDENCIES)!;
-        }
+    if (parentTarget === null) {
+        return [];
     }
 
-    return createDependencies(metadata);
+    const parentMetadata: Metadata = MetadataReflector.reflect(parentTarget, metadata.propertyKey);
+
+    if (parentMetadata.hasOwn(DEPENDENCIES)) {
+        return parentMetadata.getOwn(DEPENDENCIES)!;
+    }
+
+    return getDependencies(parentMetadata);
 }
 
 export function Injectable(): ClassDecorator & MethodDecorator {
